@@ -17,6 +17,8 @@ public class PlayerEntity extends RenderableObject {
     public float gravity;
     public float gravitySpeed;
     public int playerSpeedX;
+    public int jumpPower;
+    public float maxgravity;
 
     public PlayerEntity(int x, int y, int playerSpeedX) {
         super(x, y);
@@ -24,11 +26,6 @@ public class PlayerEntity extends RenderableObject {
         URL playerAnimationURL = PlayerEntity.class.getClassLoader().getResource("textures/player/");
         URL playerLeftAnimationURL = PlayerEntity.class.getClassLoader().getResource("textures/player_left/");
 
-        if (playerAnimationURL == null || playerLeftAnimationURL == null) {
-            System.out.println("one is null: ");
-            System.out.println(playerAnimationURL == null);
-            System.out.println(playerLeftAnimationURL == null);
-        }
 
         try {
             playerAnimation = Animation.loadByDir(new File(playerAnimationURL.toURI()),60, true);
@@ -41,8 +38,10 @@ public class PlayerEntity extends RenderableObject {
         playerLeftAnimation.resumeAnimation();
         direction = PlayerDirection.RIGHT;
         this.playerSpeedX = playerSpeedX;
-        this.gravity = 0.05f;
+        this.gravity = 0.01f;
         this.gravitySpeed = 1f;
+        this.jumpPower =12;
+        this.maxgravity = gravitySpeed + 0.25f;
     }
     public void handleMovement() {
         calcphysics();
@@ -55,8 +54,11 @@ public class PlayerEntity extends RenderableObject {
     }
     private void calcphysics() {
         this.gravitySpeed += this.gravity;
-        if (y + gravitySpeed >= Game.gameWindow().getHeight()) {
-            System.out.println("touched ground");
+        if (this.gravitySpeed > maxgravity) {
+            this.gravitySpeed = maxgravity;
+        }
+        if (y + gravitySpeed >= Game.gameWindow().getHeight() - Game.gameWindow().tileSize + 3) {
+            //Touched Ground
             return;
         }
         y += gravitySpeed;

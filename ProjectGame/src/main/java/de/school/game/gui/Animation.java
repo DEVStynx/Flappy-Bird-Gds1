@@ -92,7 +92,7 @@ public class Animation extends TimerTask {
     @Override
     public void run() {
         nextFrame(); // Nächsten Frame aufrufen
-        System.out.println("Current Texture: " + currentAnimIndex);
+        //System.out.println("Current Texture: " + currentAnimIndex);
         if (!loop && this.currentAnimIndex == this.keyframeCount - 1) {
             stopAnimation(); // Animation stoppen, wenn nicht im Loop
         }

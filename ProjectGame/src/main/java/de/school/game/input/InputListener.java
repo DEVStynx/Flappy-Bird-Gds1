@@ -17,7 +17,8 @@ public class InputListener implements java.awt.event.KeyListener, MouseListener 
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
             System.out.println();
-            Game.player().y += 3;
+            Game.player().y -= Game.player().jumpPower * 10;
+            Game.player().gravitySpeed = 1f;
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (Game.player().direction == PlayerDirection.LEFT) {
