@@ -7,6 +7,8 @@ import de.school.game.gui.Animation;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class PlayerEntity extends RenderableObject {
     public Animation playerAnimation;
@@ -18,8 +20,23 @@ public class PlayerEntity extends RenderableObject {
 
     public PlayerEntity(int x, int y, int playerSpeedX) {
         super(x, y);
-        playerAnimation = Animation.loadByDir(new File("Z:\\its\\Java\\IntellijWorkspaces\\ProjectGame\\src\\main\\resources\\textures\\player"),60, true);
-        playerLeftAnimation = Animation.loadByDir(new File("Z:\\its\\Java\\IntellijWorkspaces\\ProjectGame\\src\\main\\resources\\textures\\player_left"),60, true);
+
+        URL playerAnimationURL = PlayerEntity.class.getClassLoader().getResource("textures/player/");
+        URL playerLeftAnimationURL = PlayerEntity.class.getClassLoader().getResource("textures/player_left/");
+
+        if (playerAnimationURL == null || playerLeftAnimationURL == null) {
+            System.out.println("one is null: ");
+            System.out.println(playerAnimationURL == null);
+            System.out.println(playerLeftAnimationURL == null);
+        }
+
+        try {
+            playerAnimation = Animation.loadByDir(new File(playerAnimationURL.toURI()),60, true);
+            playerLeftAnimation = Animation.loadByDir(new File(playerLeftAnimationURL.toURI()),60, true);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
         playerAnimation.resumeAnimation();
         playerLeftAnimation.resumeAnimation();
         direction = PlayerDirection.RIGHT;
@@ -38,7 +55,7 @@ public class PlayerEntity extends RenderableObject {
     }
     private void calcphysics() {
         this.gravitySpeed += this.gravity;
-        if (!(y >= Game.gameWindow().getHeight())) {
+        if (y + gravitySpeed >= Game.gameWindow().getHeight()) {
             System.out.println("touched ground");
             return;
         }

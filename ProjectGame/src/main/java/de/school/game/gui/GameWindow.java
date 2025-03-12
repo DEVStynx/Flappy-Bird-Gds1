@@ -7,7 +7,8 @@ import java.awt.*;
 
 public class GameWindow extends JPanel {
 
-    public int x = 0;
+    public final int originalTilesize
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
