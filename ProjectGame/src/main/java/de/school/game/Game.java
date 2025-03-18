@@ -33,6 +33,7 @@ public class Game extends JFrame {
         gameClock.startGameThread();
         worldTileManager = new WorldTileManager();
         worldTileManager.loadMap("/maps/map0.map");
+        worldTileManager.loadDetaills("/maps/map0.detail");
         this.setVisible(true);
     }
 

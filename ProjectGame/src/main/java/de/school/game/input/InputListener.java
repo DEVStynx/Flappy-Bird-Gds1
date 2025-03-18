@@ -16,7 +16,6 @@ public class InputListener implements java.awt.event.KeyListener, MouseListener 
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-            System.out.println();
             Game.player().y -= Game.player().jumpPower * 10;
             Game.player().gravitySpeed = 1f;
         }

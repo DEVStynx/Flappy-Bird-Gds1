@@ -51,6 +51,7 @@ public class PlayerEntity extends RenderableObject {
         }
         x += playerSpeedX;
 
+
     }
     private void calcphysics() {
         this.gravitySpeed += this.gravity;
