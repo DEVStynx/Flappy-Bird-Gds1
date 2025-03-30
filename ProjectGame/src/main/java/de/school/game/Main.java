@@ -1,9 +1,5 @@
 package de.school.game;
 
-import de.school.game.gui.Animation;
-
-import java.io.File;
-
 public class Main extends Game {
     public Main() {
         //         120 Frames Per Second

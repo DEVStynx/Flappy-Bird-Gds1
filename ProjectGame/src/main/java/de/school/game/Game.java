@@ -1,6 +1,7 @@
 package de.school.game;
 
 import de.school.game.clock.GameClock;
+import de.school.game.collision.GameCollisionManager;
 import de.school.game.entity.player.PlayerEntity;
 import de.school.game.gui.GameWindow;
 import de.school.game.gui.world.WorldTileManager;

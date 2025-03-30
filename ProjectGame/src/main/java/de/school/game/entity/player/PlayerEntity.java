@@ -5,6 +5,7 @@ import de.school.game.entity.RenderableObject;
 import de.school.game.gui.Animation;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -49,11 +50,15 @@ public class PlayerEntity extends RenderableObject {
         if (direction == PlayerDirection.LEFT) {
             if (Game.gameCollisionManager().canPlayerMove(-playerSpeedX, 0)) {
                 x -= playerSpeedX;
+            } else {
+                direction = PlayerDirection.RIGHT;
             }
          return;
         }
         if (Game.gameCollisionManager().canPlayerMove(playerSpeedX, 0)) {
             x += playerSpeedX;
+        } else {
+            direction = PlayerDirection.LEFT;
         }
 
 
@@ -68,7 +73,11 @@ public class PlayerEntity extends RenderableObject {
             //Touched Ground
             return;
         }
-        y += gravitySpeed;
+        if (Game.gameCollisionManager().canPlayerMove(0, (int) gravitySpeed)) {
+            y += gravitySpeed;
+            return;
+        }
+
     }
 
     @Override

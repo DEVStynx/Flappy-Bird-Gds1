@@ -1,11 +1,10 @@
-package de.school.game;
+package de.school.game.collision;
 
+import de.school.game.Game;
 import de.school.game.entity.RenderableObject;
 import de.school.game.entity.TileObject;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class GameCollisionManager {
@@ -35,21 +34,24 @@ public class GameCollisionManager {
         }
         return nearbyTiles;
     }
-    public boolean canPlayerMove(int deltaX, int deltaY) {
-        RenderableObject player = Game.player();
-
-        int newX = player.x + deltaX;
-        int newY = player.y + deltaY;
-
-        for (TileObject tile : nearbyTiles) {
-            if (tile.collisionId == 1 && doess_entity_collide_with_entity(new TileObject(newX, newY, Integer.MAX_VALUE), tile)) {
-                return false;
+    public boolean canPlayerMove(int offsetx, int offsety) {
+        int[] playerTilePosition = getPlayerTilePosition(offsetx,offsety);
+        Set<TileObject> nearbyTiles = get_nearbyTiles();
+        for(TileObject tile : nearbyTiles) {
+            if (tile.collisionId == 1) {         //Simulating player with offsetted position //TODO: CLEANUP
+                if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0).getHitbox())) {
+                    return false;
+                }
             }
         }
         return true;
     }
+
     public int[] getPlayerTilePosition() {
         return new int[]{Game.player().x / Game.gameWindow().tileSize, Game.player().y / Game.gameWindow().tileSize};
+    }
+    public int[] getPlayerTilePosition(int offsetx, int offsety) {
+        return new int[]{Game.player().x +offsetx/ Game.gameWindow().tileSize, Game.player().y +offsety / Game.gameWindow().tileSize};
     }
     public boolean isTileOutofRange(int[]tileposition) {
         return tileposition[0] > Game.gameWindow().maxScreenCol -1 || tileposition[0] < 0 || tileposition[1] > Game.gameWindow().maxScreenRows -1 || tileposition[1] < 0;
