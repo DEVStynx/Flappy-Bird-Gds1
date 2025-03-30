@@ -44,12 +44,18 @@ public class PlayerEntity extends RenderableObject {
         this.maxgravity = gravitySpeed + 0.25f;
     }
     public void handleMovement() {
+
         calcphysics();
         if (direction == PlayerDirection.LEFT) {
-         x -= playerSpeedX;
+            if (Game.gameCollisionManager().canPlayerMove(-playerSpeedX, 0)) {
+                x -= playerSpeedX;
+            }
          return;
         }
-        x += playerSpeedX;
+        if (Game.gameCollisionManager().canPlayerMove(playerSpeedX, 0)) {
+            x += playerSpeedX;
+        }
+
 
 
     }

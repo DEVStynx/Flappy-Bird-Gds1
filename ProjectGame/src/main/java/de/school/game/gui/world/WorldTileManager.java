@@ -28,9 +28,8 @@ public class WorldTileManager {
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         loadedDetails = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         collisionTileManager = new CollisionTileManager();
-        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/tile017.png"))));
-        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/tile021.png"))));
-        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/tile012.png"))));
+        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/floor01.png"))));
+        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass01.png"))));
         addDetailToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
         addDetailToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
     }
@@ -131,13 +130,16 @@ public class WorldTileManager {
     }
 
     public class CollisionTileManager {
-        public int[][] WorldCollision;
+        public int[][] worldCollision;
+        public int[] levelGoal;
 
         public CollisionTileManager() {
-            WorldCollision = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
+            worldCollision = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
+            levelGoal = new int[2];
             //0 ist keine Kollision
             //1 ist die Kollision mit einer Wand
             //2 ist das "sterben"/"neu beginnen" eines Levels
+            //3 ist das Ziel eines Levels
         }
 
         public void loadMapCollisions(String resource) {
@@ -154,12 +156,16 @@ public class WorldTileManager {
                     for (int col = 0; col < Game.gameWindow().maxScreenCol; col++) {
                         if (col < tileIds.length) {
                             int coll = Integer.parseInt(tileIds[col]);
-                            if (coll > 2) {
+                            if (coll > 3) {
                                 throw new IllegalArgumentException("diese Zahl/Kollision existiert nicht!");
                             }
-                            WorldCollision[col][row] = coll;
+                            worldCollision[col][row] = coll;
+                            if (coll == 3) {
+                                levelGoal[0] = col;
+                                levelGoal[1] = row;
+                            }
                         } else {
-                            WorldCollision[col][row] = 0;
+                            worldCollision[col][row] = 0;
                         }
                     }
                     row++;
@@ -169,6 +175,9 @@ public class WorldTileManager {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+        public int[] getLevelGoal (){
+            return levelGoal;
         }
 
     }

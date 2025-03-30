@@ -1,6 +1,8 @@
 package de.school.game.gui;
 
 import de.school.game.Game;
+import de.school.game.entity.TileObject;
+import de.school.game.gui.world.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +30,23 @@ public class GameWindow extends JPanel {
         Graphics2D graphics2D = (Graphics2D) g;
         Game.worldTileManager().render(graphics2D);
         g.drawImage(Game.player().getTexture(),Game.player().x,Game.player().y,null);
-
+        for (TileObject tile : Game.gameCollisionManager().get_nearbyTiles()) {
+            switch (tile.collisionId) {
+                case 0:
+                    g.setColor(Color.BLACK);
+                    break;
+                case 1:
+                    g.setColor(Color.GRAY);
+                    break;
+                case 2:
+                    g.setColor(Color.RED);
+                    break;
+                case 3:
+                    g.setColor(Color.ORANGE);
+                    break;
+            }
+            g.drawRect(tile.x,tile.y,tileSize,tileSize);
+        }
 
         //Don't put anything here
         g.dispose();

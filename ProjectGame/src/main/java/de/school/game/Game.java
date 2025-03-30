@@ -14,6 +14,7 @@ public class Game extends JFrame {
     private static PlayerEntity player;
     private static InputListener inputListener;
     private static WorldTileManager worldTileManager;
+    private static GameCollisionManager GameCollisionManager;
 
     public Game(int FPS) {
         this.setTitle("Game");
@@ -22,16 +23,18 @@ public class Game extends JFrame {
         this.setFocusable(true);
         gameWindow = new GameWindow();
         this.add(gameWindow);
-        this.setResizable(false);
+        this.setResizable(true);
         this.pack();
         inputListener = new InputListener();
         this.addKeyListener(inputListener);
         this.addMouseListener(inputListener);
         player = new PlayerEntity(0, 0, 1);
-        gameClock = new GameClock(FPS);
-        gameClock.startGameThread();
         worldTileManager = new WorldTileManager();
         worldTileManager().loadmap("/maps/map0");
+        GameCollisionManager = new GameCollisionManager();
+
+        gameClock = new GameClock(FPS);
+        gameClock.startGameThread();
         this.setVisible(true);
     }
 
@@ -49,6 +52,10 @@ public class Game extends JFrame {
 
     public static WorldTileManager worldTileManager() {
         return worldTileManager;
+    }
+
+    public static GameCollisionManager gameCollisionManager() {
+        return GameCollisionManager;
     }
 
 }

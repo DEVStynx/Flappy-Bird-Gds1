@@ -52,6 +52,8 @@ public class GameClock implements Runnable{
         Game.gameWindow().repaint();
         if (Game.player() != null) {
             Game.player().handleMovement();
+            if (Game.gameCollisionManager() != null)
+                Game.gameCollisionManager().get_nearbyTiles();
         }
 
     }
