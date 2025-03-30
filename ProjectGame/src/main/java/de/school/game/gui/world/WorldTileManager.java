@@ -6,6 +6,7 @@ import de.school.game.util.rendering.RenderUtil;
 
 import java.awt.*;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -48,6 +49,14 @@ public class WorldTileManager {
         loadMaptextures(resource + ".map");
         loadDetails(resource + ".detail");
         collisionTileManager.loadMapCollisions(resource + ".collision");
+    }
+    public void loadMapByDir(String resource) {
+        File file = new File(resource);
+        if (file.isDirectory()) {
+            loadmap(resource);
+        }
+        String name = file.getName();
+        loadmap(resource + File.separator + name);
     }
 
     public void loadMaptextures(String resource) {
