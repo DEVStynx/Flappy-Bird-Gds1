@@ -1,6 +1,7 @@
 package de.school.game.clock;
 
 import de.school.game.Game;
+import de.school.game.GameController;
 import de.school.game.gui.GameWindow;
 
 public class GameClock implements Runnable{
@@ -24,6 +25,8 @@ public class GameClock implements Runnable{
 
     @Override
     public void run() {
+
+
         //Da wir hier mit Nanosekunden arbeiten
         UpdateIntervall = 1000000000 / FPS;
         DeltaTime = 0.0D;
@@ -38,7 +41,8 @@ public class GameClock implements Runnable{
 
             if (DeltaTime >= 1) {
                 DeltaTime--;
-                update();
+                if (Game.gameController().getGamestate().equals(GameController.Gamestate.RUNNING))
+                    update();
                 update = true;
             } else {
                 update = false;

@@ -27,7 +27,7 @@ public class GameCollisionManager {
                 if (isTileOutofRange(new int[]{col, row})) {
                     continue;
                 }
-                System.out.println("Tile: " + col + " " + row);
+                //System.out.println("Tile: " + col + " " + row);
                 TileObject tile = new TileObject(col * Game.gameWindow().tileSize, row * Game.gameWindow().tileSize, Game.worldTileManager().collisionTileManager.worldCollision[col][row]);
                 nearbyTiles.add(tile);
             }
@@ -38,6 +38,23 @@ public class GameCollisionManager {
         int[] playerTilePosition = getPlayerTilePosition(offsetx,offsety);
         Set<TileObject> nearbyTiles = get_nearbyTiles();
         for(TileObject tile : nearbyTiles) {
+            if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0,Game.player().getHitbox().width,Game.player().getHitbox().height).getHitbox())) {
+                switch (tile.collisionId) {
+                    //Collision detected
+                    case 1:
+                        return false;
+                    //Game Lost
+                    case 2:
+                        Game.gameController().loseGame();
+                        return false;
+                    //Game Won
+                    case 3:
+                        Game.gameController().winGame();
+                        return false;
+
+                }
+            }
+
             if (tile.collisionId == 1) {         //Simulating player with offsetted position //TODO: CLEANUP
                 if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0).getHitbox())) {
                     return false;

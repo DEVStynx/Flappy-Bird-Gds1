@@ -10,7 +10,7 @@ public abstract class RenderableObject {
     public int x;
     public int y;
 
-    private Rectangle hitbox;
+    protected Rectangle hitbox;
 
     public RenderableObject(int x, int y) {
         this.x = x;
