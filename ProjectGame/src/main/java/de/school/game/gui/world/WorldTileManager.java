@@ -12,8 +12,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class WorldTileManager {
-    public HashMap<Integer, Tile> tileLibrary;
-    public HashMap<Integer, Tile> detailLibrary;
+    public HashMap<Integer, TileTexture> tileLibrary;
+    public HashMap<Integer, TileTexture> detailLibrary;
     public CollisionTileManager collisionTileManager;
 
     public int currentTileKey = 0;
@@ -29,19 +29,19 @@ public class WorldTileManager {
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         loadedDetails = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         collisionTileManager = new CollisionTileManager();
-        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/floor01.png"))));
-        addTileToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass01.png"))));
-        addDetailToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
-        addDetailToLibrary(new Tile(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/floor01.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass01.png"))));
+        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
+        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
     }
 
-    private void addTileToLibrary(Tile tile) {
-        tileLibrary.put(currentTileKey, tile);
+    private void addTileToLibrary(TileTexture tileTexture) {
+        tileLibrary.put(currentTileKey, tileTexture);
         currentTileKey++;
     }
 
-    private void addDetailToLibrary(Tile tile) {
-        detailLibrary.put(currentDetailKey, tile);
+    private void addDetailToLibrary(TileTexture tileTexture) {
+        detailLibrary.put(currentDetailKey, tileTexture);
         currentDetailKey++;
     }
 
@@ -119,7 +119,7 @@ public class WorldTileManager {
         render(graphics2D, loadedDetails, detailLibrary);
     }
 
-    private void render(Graphics2D graphics2D, int[][] map, HashMap<Integer, Tile> tiles) {
+    private void render(Graphics2D graphics2D, int[][] map, HashMap<Integer, TileTexture> tiles) {
         int col = 0;
         int row = 0;
         int x = 0;

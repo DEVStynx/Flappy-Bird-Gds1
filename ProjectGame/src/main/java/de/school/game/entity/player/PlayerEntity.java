@@ -31,6 +31,7 @@ public class PlayerEntity extends RenderableObject {
         try {
             playerAnimation = Animation.loadByDir(new File(playerAnimationURL.toURI()),60, true);
             playerLeftAnimation = Animation.loadByDir(new File(playerLeftAnimationURL.toURI()),60, true);
+
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -43,7 +44,14 @@ public class PlayerEntity extends RenderableObject {
         this.gravitySpeed = 1f;
         this.jumpPower =12;
         this.maxgravity = gravitySpeed + 0.25f;
+
     }
+
+    @Override
+    public Rectangle getHitbox() {
+        return new Rectangle(x,y,playerAnimation.getCurrentTexture().getWidth(),playerAnimation.getCurrentTexture().getHeight());
+    }
+
     public void handleMovement() {
 
         calcphysics();

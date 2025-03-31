@@ -2,7 +2,6 @@ package de.school.game.gui;
 
 import de.school.game.Game;
 import de.school.game.entity.TileObject;
-import de.school.game.gui.world.Tile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +28,8 @@ public class GameWindow extends JPanel {
         super.paint(g);
         Graphics2D graphics2D = (Graphics2D) g;
         Game.worldTileManager().render(graphics2D);
-        g.drawImage(Game.player().getTexture(),Game.player().x,Game.player().y,null);
+        graphics2D.drawImage(Game.player().getTexture(),Game.player().x,Game.player().y,null);
+        graphics2D.drawRect(Game.player().x,Game.player().y,Game.player().getHitbox().width,Game.player().getHitbox().height);
         for (TileObject tile : Game.gameCollisionManager().get_nearbyTiles()) {
             switch (tile.collisionId) {
                 case 0:

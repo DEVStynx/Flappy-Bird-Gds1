@@ -22,11 +22,14 @@ public class Game extends JFrame {
     private static InputListener inputListener;
     private static WorldTileManager worldTileManager;
     private static GameCollisionManager GameCollisionManager;
+    private static GameController gameController;
 
     private static BufferedImage icon;
 
     public Game(int FPS) {
         this.setTitle("Game");
+
+        gameController = new GameController();
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -72,5 +75,9 @@ public class Game extends JFrame {
     public static GameCollisionManager gameCollisionManager() {
         return GameCollisionManager;
     }
+    public static GameController gameController() {
+        return gameController;
+    }
+
 
 }
