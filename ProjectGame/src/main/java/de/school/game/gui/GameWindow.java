@@ -1,6 +1,7 @@
 package de.school.game.gui;
 
 import de.school.game.Game;
+import de.school.game.GameController;
 import de.school.game.entity.TileObject;
 
 import javax.swing.*;
@@ -26,6 +27,8 @@ public class GameWindow extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        if (Game.gameController().getGamestate() == GameController.Gamestate.MENU)
+            return;
         Graphics2D graphics2D = (Graphics2D) g;
         Game.worldTileManager().render(graphics2D);
         graphics2D.drawImage(Game.player().getTexture(),Game.player().x,Game.player().y,null);
