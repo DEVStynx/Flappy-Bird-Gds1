@@ -52,7 +52,9 @@ public class GameClock implements Runnable{
     }
 
     public void update() {
-
+        //Wenn der Spieler in einem Menü ist kein Game-Update ausführen
+        if (Game.gameController().getGamestate() == GameController.Gamestate.MENU)
+            return;
         Game.gameWindow().repaint();
         if (Game.player() != null) {
             Game.player().handleMovement();

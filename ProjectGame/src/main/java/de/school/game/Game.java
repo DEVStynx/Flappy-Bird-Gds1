@@ -4,6 +4,7 @@ import de.school.game.clock.GameClock;
 import de.school.game.collision.GameCollisionManager;
 import de.school.game.entity.player.PlayerEntity;
 import de.school.game.gui.GameWindow;
+import de.school.game.gui.menu.MainMenu;
 import de.school.game.gui.world.WorldTileManager;
 import de.school.game.input.InputListener;
 import de.school.game.util.FileUtil;
@@ -21,15 +22,20 @@ public class Game extends JFrame {
     private static PlayerEntity player;
     private static InputListener inputListener;
     private static WorldTileManager worldTileManager;
-    private static GameCollisionManager GameCollisionManager;
+    private static GameCollisionManager gameCollisionManager;
     private static GameController gameController;
+    private static MainMenu mainMenu;
 
     private static BufferedImage icon;
 
     public Game(int FPS) {
-        this.setTitle("Game");
+        mainMenu = new MainMenu();
+        gameController = new GameController(); // Stelle sicher, dass der GameController initialisiert ist
+        startGame(FPS);
+    }
 
-        gameController = new GameController();
+    public void startGame(int FPS) {
+        this.setTitle("Game");
 
         this.setResizable(false);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,23 +43,36 @@ public class Game extends JFrame {
         gameWindow = new GameWindow();
         this.add(gameWindow);
         this.setResizable(true);
+
         this.pack();
         inputListener = new InputListener();
         this.addKeyListener(inputListener);
         this.addMouseListener(inputListener);
-        player = new PlayerEntity(0, 0, 1);
-        worldTileManager = new WorldTileManager();
-        worldTileManager.loadMapByDir("/maps/map0");
-        GameCollisionManager = new GameCollisionManager();
 
         gameClock = new GameClock(FPS);
-        gameClock.startGameThread();
-
-
         icon = RenderUtil.loadTexture(FileUtil.getFileByResource("textures/player/player_anim_mid.png"));
         this.setIconImage(icon);
 
         this.setVisible(true);
+
+        // GameController auf Menü setzen und Menü anzeigen
+        gameController.setGamestate(GameController.Gamestate.MENU);
+        mainMenu.showMenu(); // Menü wird jetzt angezeigt
+        pack();
+    }
+
+    public static void loadLevel(String level) {
+        // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
+        if (gameController.getGamestate() == GameController.Gamestate.MENU) {
+            gameController.setGamestate(GameController.Gamestate.RUNNING);
+
+            player = new PlayerEntity(gameWindow.maxScreenCol / 2 * gameWindow.tileSize, gameWindow.maxScreenRows / 2 * gameWindow.tileSize, 1);
+            worldTileManager = new WorldTileManager();
+            worldTileManager.loadMapByDir(level);
+            gameCollisionManager = new GameCollisionManager();
+
+            gameClock.startGameThread(); // Starte den GameClock, um das Level zu aktualisieren
+        }
     }
 
     public static GameWindow gameWindow() {
@@ -73,11 +92,10 @@ public class Game extends JFrame {
     }
 
     public static GameCollisionManager gameCollisionManager() {
-        return GameCollisionManager;
+        return gameCollisionManager;
     }
+
     public static GameController gameController() {
         return gameController;
     }
-
-
 }
