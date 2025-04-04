@@ -12,6 +12,7 @@ import de.school.game.util.rendering.RenderUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,13 +26,17 @@ public class Game extends JFrame {
     private static GameCollisionManager gameCollisionManager;
     private static GameController gameController;
     private static MainMenu mainMenu;
+    public static int FPS;
 
     private static BufferedImage icon;
 
     public Game(int FPS) {
         mainMenu = new MainMenu();
-        gameController = new GameController(); // Stelle sicher, dass der GameController initialisiert ist
-        startGame(FPS);
+
+        //                                  Setzt den Modus auf Debugging/Normal        Debugging = true
+        gameController = new GameController(true); // Stelle sicher, dass der GameController initialisiert ist
+        Game.FPS = FPS;
+        startGame(Game.FPS);
     }
 
     public void startGame(int FPS) {
@@ -41,13 +46,14 @@ public class Game extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setFocusable(true);
         gameWindow = new GameWindow();
+
         this.add(gameWindow);
         this.setResizable(true);
 
         this.pack();
         inputListener = new InputListener();
         this.addKeyListener(inputListener);
-        this.addMouseListener(inputListener);
+        
 
         gameClock = new GameClock(FPS);
         icon = RenderUtil.loadTexture(FileUtil.getFileByResource("textures/player/player_anim_mid.png"));
@@ -64,14 +70,16 @@ public class Game extends JFrame {
     public static void loadLevel(String level) {
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
         if (gameController.getGamestate() == GameController.Gamestate.MENU) {
-            gameController.setGamestate(GameController.Gamestate.RUNNING);
+            Game.gameWindow.repaint();
+            gameController.setGamestate(GameController.Gamestate.STARTING);
 
             player = new PlayerEntity(gameWindow.maxScreenCol / 2 * gameWindow.tileSize, gameWindow.maxScreenRows / 2 * gameWindow.tileSize, 1);
             worldTileManager = new WorldTileManager();
             worldTileManager.loadMapByDir(level);
             gameCollisionManager = new GameCollisionManager();
 
-            gameClock.startGameThread(); // Starte den GameClock, um das Level zu aktualisieren
+            gameClock = new GameClock(Game.FPS); // Starte den GameClock, um das Level zu aktualisieren
+            gameClock.startGameThread();
         }
     }
 
@@ -97,5 +105,8 @@ public class Game extends JFrame {
 
     public static GameController gameController() {
         return gameController;
+    }
+    public static MainMenu mainMenu() {
+        return mainMenu;
     }
 }

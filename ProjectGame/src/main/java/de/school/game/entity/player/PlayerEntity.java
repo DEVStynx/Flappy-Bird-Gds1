@@ -5,6 +5,7 @@ import de.school.game.entity.RenderableObject;
 import de.school.game.gui.Animation;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,7 +20,9 @@ public class PlayerEntity extends RenderableObject {
     public float gravitySpeed;
     public int playerSpeedX;
     public int jumpPower;
+    public float jumpvelocity;
     public float maxgravity;
+
 
     public PlayerEntity(int x, int y, int playerSpeedX) {
         super(x, y);
@@ -38,6 +41,8 @@ public class PlayerEntity extends RenderableObject {
 
         playerAnimation.resumeAnimation();
         playerLeftAnimation.resumeAnimation();
+
+        //Constants
         direction = PlayerDirection.RIGHT;
         this.playerSpeedX = playerSpeedX;
         this.gravity = 0.01f;
@@ -45,6 +50,14 @@ public class PlayerEntity extends RenderableObject {
         this.jumpPower =12;
         this.maxgravity = gravitySpeed + 0.25f;
 
+    }
+
+    public void deletePlayer() {
+        playerAnimation.stopAnimation();
+        playerLeftAnimation.stopAnimation();
+    }
+    public void jumpPlayer() {
+        gravitySpeed = jumpPower;
     }
 
     @Override

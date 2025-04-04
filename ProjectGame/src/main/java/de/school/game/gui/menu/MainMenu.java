@@ -29,13 +29,15 @@ public class MainMenu extends Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Game started");
-                // Hier laden wir das Level, wenn der Button gedrückt wird
+                //laden des Levels
                 deleteMenu();
                 Game.loadLevel("/maps/map0");
             }
         });
-        startButton.setBounds(50,100,startButton.getWidth(), startButton.getHeight());
+        startButton.setBounds(100,100,startButton.getWidth(), startButton.getHeight());
         this.add(startButton);
-        revalidate();
+        repaint();
     }
+
+
 }
