@@ -1,6 +1,7 @@
 package de.school.game.collision;
 
 import de.school.game.Game;
+import de.school.game.GameController;
 import de.school.game.entity.RenderableObject;
 import de.school.game.entity.TileObject;
 
@@ -37,8 +38,11 @@ public class GameCollisionManager {
     public boolean canPlayerMove(int offsetx, int offsety) {
         int[] playerTilePosition = getPlayerTilePosition(offsetx,offsety);
         Set<TileObject> nearbyTiles = get_nearbyTiles();
+        if (!Game.gameController().getGamestate().equals(GameController.Gamestate.RUNNING))
+            return false;
         for(TileObject tile : nearbyTiles) {
             if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0,Game.player().getHitbox().width,Game.player().getHitbox().height).getHitbox())) {
+                System.out.println(tile.collisionId);
                 switch (tile.collisionId) {
                     //Collision detected
                     case 1:
@@ -46,20 +50,17 @@ public class GameCollisionManager {
                     //Game Lost
                     case 2:
                         Game.gameController().loseGame();
-                        return false;
+                        break;
                     //Game Won
                     case 3:
                         Game.gameController().winGame();
-                        return false;
+                        break;
 
                 }
+
             }
 
-            if (tile.collisionId == 1) {         //Simulating player with offsetted position //TODO: CLEANUP
-                if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0).getHitbox())) {
-                    return false;
-                }
-            }
+
         }
         return true;
     }

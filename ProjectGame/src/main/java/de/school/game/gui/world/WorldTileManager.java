@@ -22,8 +22,11 @@ public class WorldTileManager {
 
     public int[][] loadedDetails;
 
+
     //Todo: Redondante Methoden wie loadMapTextures in eine Methode fassen(loadfromfile(arr,src))
     public WorldTileManager() {
+
+
         tileLibrary = new HashMap<>();
         detailLibrary = new HashMap<>();
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
@@ -49,6 +52,7 @@ public class WorldTileManager {
         loadMaptextures(resource + ".map");
         loadDetails(resource + ".detail");
         collisionTileManager.loadMapCollisions(resource + ".collision");
+
     }
     public void loadMapByDir(String resource) {
         File file = new File(resource);
@@ -57,6 +61,8 @@ public class WorldTileManager {
         }
         String name = file.getName();
         loadmap(resource + File.separator + name);
+
+
     }
 
     public void loadMaptextures(String resource) {
@@ -141,14 +147,20 @@ public class WorldTileManager {
     public class CollisionTileManager {
         public int[][] worldCollision;
         public int[] levelGoal;
+        public int[] startposition;
 
         public CollisionTileManager() {
             worldCollision = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
             levelGoal = new int[2];
+            //Startposition initialisieren
+            startposition = new int[2];
             //0 ist keine Kollision
             //1 ist die Kollision mit einer Wand
             //2 ist das "sterben"/"neu beginnen" eines Levels
             //3 ist das Ziel eines Levels
+            //4 ist die Startposition
+
+
         }
 
         public void loadMapCollisions(String resource) {
@@ -165,13 +177,17 @@ public class WorldTileManager {
                     for (int col = 0; col < Game.gameWindow().maxScreenCol; col++) {
                         if (col < tileIds.length) {
                             int coll = Integer.parseInt(tileIds[col]);
-                            if (coll > 3) {
+                            if (coll > 4) {
                                 throw new IllegalArgumentException("diese Zahl/Kollision existiert nicht!");
                             }
                             worldCollision[col][row] = coll;
                             if (coll == 3) {
                                 levelGoal[0] = col;
                                 levelGoal[1] = row;
+                            }
+                            else if(coll == 4) {
+                                startposition[0] = col;
+                                startposition[1] = row;
                             }
                         } else {
                             worldCollision[col][row] = 0;
@@ -181,6 +197,8 @@ public class WorldTileManager {
                 }
                 reader.close();
                 stream.close();
+                Game.player().x = startposition[0] * Game.gameWindow().tileSize;
+                Game.player().y = startposition[1] * Game.gameWindow().tileSize;
             } catch (Exception e) {
                 e.printStackTrace();
             }

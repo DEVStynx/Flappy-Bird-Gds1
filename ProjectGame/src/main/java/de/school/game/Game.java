@@ -48,14 +48,14 @@ public class Game extends JFrame {
         gameWindow = new GameWindow();
 
         this.add(gameWindow);
-        this.setResizable(true);
+
 
         this.pack();
         inputListener = new InputListener();
         this.addKeyListener(inputListener);
         
 
-        gameClock = new GameClock(FPS);
+
         icon = RenderUtil.loadTexture(FileUtil.getFileByResource("textures/player/player_anim_mid.png"));
         this.setIconImage(icon);
 
@@ -69,18 +69,18 @@ public class Game extends JFrame {
 
     public static void loadLevel(String level) {
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
-        if (gameController.getGamestate() == GameController.Gamestate.MENU) {
-            Game.gameWindow.repaint();
-            gameController.setGamestate(GameController.Gamestate.STARTING);
+        Game.gameWindow.repaint();
+        gameController.setGamestate(GameController.Gamestate.STARTING);
 
-            player = new PlayerEntity(gameWindow.maxScreenCol / 2 * gameWindow.tileSize, gameWindow.maxScreenRows / 2 * gameWindow.tileSize, 1);
-            worldTileManager = new WorldTileManager();
-            worldTileManager.loadMapByDir(level);
-            gameCollisionManager = new GameCollisionManager();
+        player = new PlayerEntity(gameWindow.maxScreenCol / 2 * gameWindow.tileSize, gameWindow.maxScreenRows / 2 * gameWindow.tileSize, 1);
+        worldTileManager = new WorldTileManager();
+        worldTileManager.loadMapByDir(level);
+        gameCollisionManager = new GameCollisionManager();
+        if (gameClock != null)
+            gameClock.killGameThread();
 
-            gameClock = new GameClock(Game.FPS); // Starte den GameClock, um das Level zu aktualisieren
-            gameClock.startGameThread();
-        }
+        gameClock = new GameClock(Game.FPS); // Starte den GameClock, um das Level zu aktualisieren
+        gameClock.startGameThread();
     }
 
     public static GameWindow gameWindow() {

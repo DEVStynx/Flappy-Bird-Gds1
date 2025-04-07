@@ -18,19 +18,22 @@ public class GameController {
     }
 
     public void winGame() {
-        setGamestate(Gamestate.WON);
-        System.out.println("Game Won!");
-    }
 
-    public void loseGame() {
-        Game.gameClock().scoreManager.updateLevelTime(System.nanoTime());
-        Game.gameClock().scoreManager.saveInFile("level0");
-        setGamestate(Gamestate.LOST);
-        System.out.println("Game Lost!");
+        System.out.println("Game Won!");
         setGamestate(Gamestate.MENU);
         Game.player().deletePlayer();
         Game.gameClock().killGameThread();
         Game.mainMenu().showMenu();
+    }
+
+    public void loseGame() {
+        Game.gameClock().killGameThread();
+        Game.gameController().setGamestate(Gamestate.STARTING);
+        Game.player().deletePlayer();
+
+        Game.loadLevel("/maps/map1");
+        System.out.println("Game Lost!");
+
     }
 
 
@@ -41,10 +44,6 @@ public class GameController {
         STARTING,
         //Gamestate für das Spiel
         RUNNING,
-        //Gamestate für das Gewinnen des Spiels
-        WON,
-        //Gamestate für das verlieren des Spiels
-        LOST,
         //Gamestate für das Pausieren des Spiels
         PAUSED
     }
