@@ -21,6 +21,9 @@ public class InputListener extends KeyAdapter {
 
             }
         }
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            Game.gameController().setGamestate(Game.gameController().getGamestate() == GameController.Gamestate.RUNNING ? GameController.Gamestate.PAUSED  : GameController.Gamestate.RUNNING);
+        }
 
         //Tastendruck für das Springen
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
