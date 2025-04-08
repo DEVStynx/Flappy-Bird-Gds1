@@ -21,6 +21,8 @@ public class GameController {
 
         System.out.println("Game Won!");
         setGamestate(Gamestate.MENU);
+        Game.audioController().stopSound("background.wav");
+        Game.audioController().playSound("win.wav");
         Game.player().deletePlayer();
         Game.gameClock().killGameThread();
         Game.mainMenu().showMenu();
@@ -30,6 +32,8 @@ public class GameController {
         Game.gameClock().killGameThread();
         Game.gameController().setGamestate(Gamestate.STARTING);
         Game.player().deletePlayer();
+        Game.audioController().stopSound("background.wav");
+        Game.audioController().playSound("death.wav");
 
         Game.loadLevel("/maps/map1");
         System.out.println("Game Lost!");

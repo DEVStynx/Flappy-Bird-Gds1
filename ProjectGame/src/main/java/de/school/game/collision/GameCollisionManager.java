@@ -42,7 +42,6 @@ public class GameCollisionManager {
             return false;
         for(TileObject tile : nearbyTiles) {
             if (tile.getHitbox().intersects(new TileObject(Game.player().x + offsetx, Game.player().y + offsety,0,Game.player().getHitbox().width,Game.player().getHitbox().height).getHitbox())) {
-                System.out.println(tile.collisionId);
                 switch (tile.collisionId) {
                     //Collision detected
                     case 1:

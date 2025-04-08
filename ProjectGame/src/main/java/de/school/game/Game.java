@@ -74,10 +74,13 @@ public class Game extends JFrame {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         pack();
     }
 
     public static void loadLevel(String level) {
+        audioController().loop("background.wav");
+        audioController().playSound("background.wav");
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
         Game.gameWindow.repaint();
         gameController.setGamestate(GameController.Gamestate.STARTING);
@@ -91,6 +94,7 @@ public class Game extends JFrame {
 
         gameClock = new GameClock(Game.FPS); // Starte den GameClock, um das Level zu aktualisieren
         gameClock.startGameThread();
+
     }
 
     public static GameWindow gameWindow() {
@@ -119,4 +123,5 @@ public class Game extends JFrame {
     public static MainMenu mainMenu() {
         return mainMenu;
     }
+    public static AudioController audioController() {return audioController;}
 }
