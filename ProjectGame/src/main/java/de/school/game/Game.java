@@ -1,5 +1,6 @@
 package de.school.game;
 
+import de.school.game.audio.AudioController;
 import de.school.game.clock.GameClock;
 import de.school.game.collision.GameCollisionManager;
 import de.school.game.entity.player.PlayerEntity;
@@ -15,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Game extends JFrame {
@@ -26,6 +28,8 @@ public class Game extends JFrame {
     private static GameCollisionManager gameCollisionManager;
     private static GameController gameController;
     private static MainMenu mainMenu;
+
+    private static AudioController audioController;
     public static int FPS;
 
     private static BufferedImage icon;
@@ -64,6 +68,12 @@ public class Game extends JFrame {
         // GameController auf Menü setzen und Menü anzeigen
         gameController.setGamestate(GameController.Gamestate.MENU);
         mainMenu.showMenu(); // Menü wird jetzt angezeigt
+        audioController = new AudioController();
+        try {
+            audioController.loadByDir();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         pack();
     }
 
