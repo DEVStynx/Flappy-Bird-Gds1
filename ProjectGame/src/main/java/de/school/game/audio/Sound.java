@@ -3,8 +3,6 @@ package de.school.game.audio;
 import de.school.game.util.FileUtil;
 
 import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class Sound {
@@ -20,10 +18,13 @@ public class Sound {
         }
 
     }
-    public CompletableFuture<Void> play() {
+    public CompletableFuture<Void> play(boolean loop) {
         return CompletableFuture.runAsync(() -> {
             clip.setFramePosition(0);
             clip.loop(0);
+            if (loop) {
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            }
             clip.start();
         });
     }

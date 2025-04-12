@@ -27,12 +27,11 @@ public class InputListener extends KeyAdapter {
 
         //Tastendruck für das Springen
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-
-            Game.player().y -= Game.player().jumpPower * 10;
-            Game.player().gravitySpeed = 1f;
+            Game.player().jump();
 
 
-            //Game.player().jumpPlayer();
+
+
         }
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (Game.player().direction == PlayerDirection.LEFT) {

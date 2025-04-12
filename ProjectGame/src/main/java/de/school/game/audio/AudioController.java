@@ -29,13 +29,15 @@ public class AudioController {
 
     public void playSound(String sound) {
         Sound soundclip = gamesounds.get(sound);
-        soundclip.play();
+        soundclip.play(false);
+    }
+    public void playSound(String sound, boolean loop) {
+        Sound soundclip = gamesounds.get(sound);
+        soundclip.play(loop);
     }
     public void stopSound(String sound) {
         gamesounds.get(sound).stop();
     }
 
-    public void loop(String sound) {
-        gamesounds.get(sound).loop();
-    }
+
 }

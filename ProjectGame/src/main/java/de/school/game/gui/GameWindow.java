@@ -48,6 +48,9 @@ public class GameWindow extends JPanel {
         //Hier wird für Debugging-Zwecke ein Rechteck um den Spieler gezeichnet, um zu sehen, wo sich der Spieler befindet und welche Kollisionen er hat.
         if (Game.gameController().debug) {
             graphics2D.drawRect(Game.player().x,Game.player().y,Game.player().getHitbox().width,Game.player().getHitbox().height);
+            int tilecol = (Game.player().x / Game.gameWindow().tileSize);
+            int tilerow = ((Game.player().y -Game.player().jumpPower * 10) / Game.gameWindow().tileSize);
+            graphics2D.drawRect(tilecol * Game.gameWindow().tileSize,tilerow * Game.gameWindow().tileSize,Game.gameWindow().tileSize,Game.gameWindow().tileSize);
             for (TileObject tile : Game.gameCollisionManager().get_nearbyTiles()) {
                 switch (tile.collisionId) {
                     case 0:

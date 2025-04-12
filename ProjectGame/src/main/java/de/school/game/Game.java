@@ -36,6 +36,7 @@ public class Game extends JFrame {
 
     public Game(int FPS) {
         mainMenu = new MainMenu();
+        this.setVisible(false);
 
         //                                  Setzt den Modus auf Debugging/Normal        Debugging = true
         gameController = new GameController(true); // Stelle sicher, dass der GameController initialisiert ist
@@ -46,7 +47,7 @@ public class Game extends JFrame {
     public void startGame(int FPS) {
         this.setTitle("Game");
 
-        this.setResizable(false);
+        this.setResizable(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setFocusable(true);
         gameWindow = new GameWindow();
@@ -79,8 +80,8 @@ public class Game extends JFrame {
     }
 
     public static void loadLevel(String level) {
-        audioController().loop("background.wav");
-        audioController().playSound("background.wav");
+
+        audioController().playSound("background.wav",true);
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
         Game.gameWindow.repaint();
         gameController.setGamestate(GameController.Gamestate.STARTING);

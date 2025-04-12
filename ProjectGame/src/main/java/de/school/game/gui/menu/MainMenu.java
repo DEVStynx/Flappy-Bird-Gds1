@@ -1,29 +1,23 @@
 package de.school.game.gui.menu;
 
 import de.school.game.Game;
-import de.school.game.util.FileUtil;
-import de.school.game.util.rendering.RenderUtil;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
 public class MainMenu extends Menu {
-
+    BufferedImage background;
     public MainMenu() {
         super("Start-Menu");
+
     }
 
     @Override
     public void initWidgets() {
 
-        ImageIcon title_Image = new ImageIcon(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/menu/main-menu/Flappy-Bird-Label.png")));
 
-
-        JLabel title_image_label = new JLabel(title_Image);
-        title_image_label.setLocation(100,100);
-        this.add(title_image_label);
         JButton startButton = new JButton("Start Game");
         startButton.addActionListener(new ActionListener() {
             @Override
@@ -34,7 +28,7 @@ public class MainMenu extends Menu {
                 Game.loadLevel("/maps/map0");
             }
         });
-        startButton.setBounds(100,100,startButton.getWidth(), startButton.getHeight());
+        startButton.setBounds(100,200,startButton.getWidth(), startButton.getHeight());
         this.add(startButton);
         repaint();
     }

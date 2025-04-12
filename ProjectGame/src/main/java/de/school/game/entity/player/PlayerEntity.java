@@ -2,7 +2,9 @@ package de.school.game.entity.player;
 
 import de.school.game.Game;
 import de.school.game.entity.RenderableObject;
+import de.school.game.entity.TileObject;
 import de.school.game.gui.Animation;
+import de.school.game.gui.world.Tile;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -56,9 +58,6 @@ public class PlayerEntity extends RenderableObject {
         playerAnimation.stopAnimation();
         playerLeftAnimation.stopAnimation();
     }
-    public void jumpPlayer() {
-        gravitySpeed = jumpPower;
-    }
 
     @Override
     public Rectangle getHitbox() {
@@ -100,6 +99,23 @@ public class PlayerEntity extends RenderableObject {
         }
 
     }
+    public void jump() {
+        int totalJumpHeight = jumpPower * 10;
+
+        for (int i = 0; i < totalJumpHeight; i++) {
+            // Checke für jeden Pixel, ob eine Bewegung möglich ist
+            if (Game.gameCollisionManager().canPlayerMove(0, -1)) {
+                y -= 1;
+            } else {
+                // Oben kollidiert – abbrechen
+                break;
+            }
+        }
+
+        // Reset gravity, damit er wieder ordentlich fällt
+        gravitySpeed = 1f;
+    }
+
 
     @Override
     public BufferedImage getTexture() {

@@ -19,6 +19,7 @@ public abstract class Menu extends JPanel {
     public void addMenu() {
         initWidgets();
         Game.gameWindow().add(this);
+        Game.gameWindow().revalidate();
         Game.gameWindow().repaint();
     }
 

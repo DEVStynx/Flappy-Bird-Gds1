@@ -32,11 +32,15 @@ public class WorldTileManager {
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         loadedDetails = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         collisionTileManager = new CollisionTileManager();
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/floor01.png"))));
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass01.png"))));
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/test.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/air.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png"))));
+
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
+
+
     }
 
     private void addTileToLibrary(TileTexture tileTexture) {
