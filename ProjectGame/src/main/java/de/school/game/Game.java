@@ -11,13 +11,10 @@ import de.school.game.input.InputListener;
 import de.school.game.util.FileUtil;
 import de.school.game.util.rendering.RenderUtil;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+
 
 public class Game extends JFrame {
     private static GameWindow gameWindow;
@@ -29,12 +26,15 @@ public class Game extends JFrame {
     private static GameController gameController;
     private static MainMenu mainMenu;
 
+    private static Game instance;
+
     private static AudioController audioController;
     public static int FPS;
 
     private static BufferedImage icon;
 
     public Game(int FPS) {
+        instance = this;
         mainMenu = new MainMenu();
         this.setVisible(false);
 
@@ -42,6 +42,7 @@ public class Game extends JFrame {
         gameController = new GameController(true); // Stelle sicher, dass der GameController initialisiert ist
         Game.FPS = FPS;
         startGame(Game.FPS);
+
     }
 
     public void startGame(int FPS) {
@@ -63,12 +64,14 @@ public class Game extends JFrame {
 
         icon = RenderUtil.loadTexture(FileUtil.getFileByResource("textures/player/player_anim_mid.png"));
         this.setIconImage(icon);
-
-        this.setVisible(true);
+        //Wenn das Menü auftaucht soll das SpielFrame nicht sichtbar sein
+        MainMenu.windowLocation = getLocation();
+        setVisible(false);
 
         // GameController auf Menü setzen und Menü anzeigen
         gameController.setGamestate(GameController.Gamestate.MENU);
         mainMenu.showMenu(); // Menü wird jetzt angezeigt
+        mainMenu.setLocation(MainMenu.windowLocation);
         audioController = new AudioController();
         try {
             audioController.loadByDir();
@@ -80,7 +83,9 @@ public class Game extends JFrame {
     }
 
     public static void loadLevel(String level) {
-
+        MainMenu.windowLocation = mainMenu().getLocation();
+        instance.setVisible(true);
+        instance.setLocation(MainMenu.windowLocation);
         audioController().playSound("background.wav",true);
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
         Game.gameWindow.repaint();
@@ -109,6 +114,9 @@ public class Game extends JFrame {
     public static PlayerEntity player() {
         return player;
     }
+    public static void showGameWindow(boolean showWindow) {
+        instance.setVisible(showWindow);
+    }
 
     public static WorldTileManager worldTileManager() {
         return worldTileManager;
@@ -125,4 +133,6 @@ public class Game extends JFrame {
         return mainMenu;
     }
     public static AudioController audioController() {return audioController;}
+
+
 }

@@ -1,5 +1,7 @@
 package de.school.game;
 
+import de.school.game.gui.menu.MainMenu;
+
 public class GameController {
 
     private Gamestate gamestate;
@@ -18,8 +20,11 @@ public class GameController {
     }
 
     public void winGame() {
+        MainMenu.windowLocation = Game.gameWindow().getLocation();
+
 
         System.out.println("Game Won!");
+        Game.showGameWindow(false);
         setGamestate(Gamestate.MENU);
         Game.audioController().stopSound("background.wav");
         Game.audioController().playSound("win.wav");
