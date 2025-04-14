@@ -5,8 +5,16 @@ import de.school.game.util.FileUtil;
 import javax.sound.sampled.*;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * A Gamesound Class
+ */
 public class Sound {
     Clip clip;
+
+    /**
+     * The constructor to load the sound of the package
+     * @param name
+     */
     public Sound(String name) {
         try {
             System.out.println(name);
@@ -18,6 +26,12 @@ public class Sound {
         }
 
     }
+
+    /**
+     * Play the Song asynchronously
+     * @param loop Should the song be looped?
+     * @return a {@link CompletableFuture<Void>} to play the sound asynchronously easy
+     */
     public CompletableFuture<Void> play(boolean loop) {
         return CompletableFuture.runAsync(() -> {
             clip.setFramePosition(0);
@@ -28,9 +42,10 @@ public class Sound {
             clip.start();
         });
     }
-    public void loop() {
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-    }
+
+    /**
+     * Stop the current Sound
+     */
     public void stop() {
         clip.stop();
     }

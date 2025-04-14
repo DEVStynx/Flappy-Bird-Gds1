@@ -1,8 +1,6 @@
 package de.school.game.gui.menu;
 
 import de.school.game.Game;
-import de.school.game.util.FileUtil;
-import de.school.game.util.rendering.RenderUtil;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,15 +10,23 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/**
+ * The Startmenu class
+ */
 public class MainMenu extends Menu {
     BufferedImage background;
     public MainMenu() {
         super("Start-Menu");
     }
 
+    /**
+     * Implemented to initialize and position all Components correctly
+     */
     @Override
     public void initWidgets() {
-
+        /**
+         * Setting the right layouts and attributes
+         */
         setMinimumSize(new Dimension(Game.gameWindow().screenWidth,Game.gameWindow().ScreenHeight));
         setLayout(null);
         setResizable(false);
@@ -69,6 +75,9 @@ public class MainMenu extends Menu {
         }
     }
 
+    /**
+     * Setting the Location of the Window to match the Game window
+     */
     @Override
     public void showMenu() {
         super.showMenu();

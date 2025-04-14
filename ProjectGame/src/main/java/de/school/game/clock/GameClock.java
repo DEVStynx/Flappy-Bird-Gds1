@@ -2,8 +2,10 @@ package de.school.game.clock;
 
 import de.school.game.Game;
 import de.school.game.GameController;
-import de.school.game.gui.GameWindow;
 
+/**
+ * The GameClock Class for Game-Updates
+ */
 public class GameClock implements Runnable{
     public int FPS;
     public Thread GameThread;
@@ -12,6 +14,10 @@ public class GameClock implements Runnable{
     public boolean update;
     public ScoreManager scoreManager;
 
+    /**
+     * The GameClock Constructor
+     * @param pFPS Frames-per-second
+     */
     public GameClock(int pFPS) {
         FPS = pFPS;
         GameThread = new Thread(this);
@@ -19,12 +25,20 @@ public class GameClock implements Runnable{
         System.out.println("Starting GameClock with " + FPS + " FPS");
         scoreManager = new ScoreManager();
     }
+
+    /**
+     * Starts the Game Clock/Updater
+     */
     public void startGameThread() {
         if (GameThread != null) {
             GameThread.start();
 
         }
     }
+
+    /**
+     * Stops the Game Clock/Updater
+     */
     public void killGameThread() {
         if (GameThread != null) {
             GameThread.interrupt();
@@ -32,10 +46,12 @@ public class GameClock implements Runnable{
         }
     }
 
+    /**
+     * Calculates the deltatime and checks if the Game can update
+     * <p>Then calls the update Method</p>
+     */
     @Override
     public void run() {
-
-
         //Da wir hier mit Nanosekunden arbeiten
         UpdateIntervall = 1000000000 / FPS;
         DeltaTime = 0.0D;
@@ -60,12 +76,17 @@ public class GameClock implements Runnable{
 
     }
 
+    /**
+     * The Main update Method if the Game is updating
+     */
     public void update() {
         //Wenn der Spieler in einem Menü ist kein Game-Update ausführen
+        //If the player is in a menu, don't update the Game
         if (Game.gameController().getGamestate() != GameController.Gamestate.RUNNING)
             return;
 
         //Game-Update wird ausgeführt
+        //Update the game screen
         Game.gameWindow().repaint();
 
 

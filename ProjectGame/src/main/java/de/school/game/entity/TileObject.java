@@ -4,8 +4,12 @@ import de.school.game.Game;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.InvalidClassException;
 
+/**
+ * The Object of Tiles for:
+ * <p>Collision management</p>
+ * <p>Rendering</p>
+ */
 public class TileObject extends RenderableObject{
     public int collisionId;
     private int width;
