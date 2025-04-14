@@ -9,30 +9,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+/**
+ * receives Keyboard input
+ * extends {@link KeyAdapter} instead of the {@link java.awt.event.KeyListener KeyListener} to avoid unnecessary implemented Methods
+ */
 public class InputListener extends KeyAdapter {
 
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //Tastendruck für das Starten des Spiels
-        if (Game.gameController().getGamestate() == GameController.Gamestate.STARTING) {
-            if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                Game.gameController().setGamestate(GameController.Gamestate.RUNNING);
-
-            }
-        }
+        //Keyboardinput to pause the game with escape
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             Game.gameController().setGamestate(Game.gameController().getGamestate() == GameController.Gamestate.RUNNING ? GameController.Gamestate.PAUSED  : GameController.Gamestate.RUNNING);
         }
 
-        //Tastendruck für das Springen
         if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            //Keyboardinput to start the Game
+            if (Game.gameController().getGamestate() == GameController.Gamestate.STARTING) {
+                Game.gameController().setGamestate(GameController.Gamestate.RUNNING);
+                return;
+            }
+            //Keyboardinput to let the player jump
             Game.player().jump();
-
-
-
-
         }
+        //Keyboardinput to turn the players position
         if (e.getKeyCode() == KeyEvent.VK_R) {
             if (Game.player().direction == PlayerDirection.LEFT) {
                 Game.player().direction = PlayerDirection.RIGHT;

@@ -15,7 +15,9 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 
-
+/**
+ * The Game Class -> the Center of the project
+ */
 public class Game extends JFrame {
     private static GameWindow gameWindow;
     private static GameClock gameClock;
@@ -33,18 +35,26 @@ public class Game extends JFrame {
 
     private static BufferedImage icon;
 
+    /**
+     *  The Constructor -> Specifies FPS, constructs the Mainmenu ...
+     */
     public Game(int FPS) {
         instance = this;
         mainMenu = new MainMenu();
         this.setVisible(false);
 
-        //                                  Setzt den Modus auf Debugging/Normal        Debugging = true
-        gameController = new GameController(true); // Stelle sicher, dass der GameController initialisiert ist
+        //                                  Setzt den Modus auf Debugging/Normal Debugging = true
+        gameController = new GameController(false
+        ); // Stelle sicher, dass der GameController initialisiert ist
         Game.FPS = FPS;
         startGame(Game.FPS);
 
     }
 
+    /**
+     * Starts the Game
+     * @param FPS Frames Per Second -> The count of updates the Window is recieving in a second
+     */
     public void startGame(int FPS) {
         this.setTitle("Game");
 
@@ -82,6 +92,10 @@ public class Game extends JFrame {
         pack();
     }
 
+    /**
+     * Logic to load a level
+     * @param level The levelname -> points to a directory in the resources
+     */
     public static void loadLevel(String level) {
         MainMenu.windowLocation = mainMenu().getLocation();
         instance.setVisible(true);
@@ -102,6 +116,10 @@ public class Game extends JFrame {
         gameClock.startGameThread();
 
     }
+
+    /**
+     * Static Getters/Methods to Get Access to Game Functionality
+     */
 
     public static GameWindow gameWindow() {
         return gameWindow;

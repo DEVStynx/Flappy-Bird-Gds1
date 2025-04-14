@@ -7,6 +7,11 @@ import java.io.File;
 import java.net.URL;
 
 public class FileUtil {
+    /**
+     * Utility Method to quickly get File Objects out of a String resource path
+     * @param resource
+     * @return
+     */
     public static File getFileByResource(String resource) {
         URL url = PlayerEntity.class.getClassLoader().getResource(resource);
         File file = new File(url.getPath());

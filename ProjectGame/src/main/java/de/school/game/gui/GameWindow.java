@@ -18,6 +18,9 @@ public class GameWindow extends JPanel {
     public final int screenWidth = tileSize * maxScreenCol;
     public final int ScreenHeight = tileSize * maxScreenRows;
 
+    /**
+     * Variables to see the time needed for rendering
+     */
     private long lastWindowUpdate;
     private long currentWindowUpdate;
 
@@ -31,21 +34,19 @@ public class GameWindow extends JPanel {
     public void paint(Graphics g) {
         super.paint(g);
         lastWindowUpdate = System.nanoTime();
+        //Don't render the Game if the player is currently in a menu
         //Wir wollen das Spiel nicht rendern, wenn wir im Menü sind
         if (Game.gameController().getGamestate() == GameController.Gamestate.MENU)
             return;
-
-
-
-
         Graphics2D graphics2D = (Graphics2D) g;
 
-
-
-
+        //render the Game Map
         Game.worldTileManager().render(graphics2D);
+        //Render the Player Character
         graphics2D.drawImage(Game.player().getTexture(),Game.player().x,Game.player().y,null);
+
         //Hier wird für Debugging-Zwecke ein Rechteck um den Spieler gezeichnet, um zu sehen, wo sich der Spieler befindet und welche Kollisionen er hat.
+        //Render for debugging-purposes the hitboxes around the player and render all possible collisions
         if (Game.gameController().debug) {
             graphics2D.drawRect(Game.player().x,Game.player().y,Game.player().getHitbox().width,Game.player().getHitbox().height);
             int tilecol = (Game.player().x / Game.gameWindow().tileSize);
@@ -71,10 +72,11 @@ public class GameWindow extends JPanel {
         }
 
         currentWindowUpdate = System.nanoTime();
-        //Zum beheben von Performance-Probleme, wenn das Spiel nicht läuft
+        //Zum beheben von Performance-Probleme, wenn das Spiel nicht läuft -> uncomment to see the rendering time
         //System.out.println("renderTime: "+(currentWindowUpdate - lastWindowUpdate) / 1000000 + "ms");
         lastWindowUpdate = currentWindowUpdate;
 
+        //Render text to tell the player to press space in order to start the game
         //Hier wird der Text gerendert, der den Spieler darauf hinweist die Leertaste zu drücken, um das Spiel zu starten.
         if (Game.gameController().getGamestate().equals(GameController.Gamestate.STARTING)) {
             graphics2D.setColor(Color.WHITE);
@@ -83,6 +85,7 @@ public class GameWindow extends JPanel {
         }
 
         //Don't put anything here
+        //After this, nothing will be rendered
         g.dispose();
     }
 }

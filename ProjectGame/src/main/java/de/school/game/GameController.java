@@ -19,10 +19,11 @@ public class GameController {
         return gamestate;
     }
 
+    /**
+     * The Standard Method to Win the Game
+     */
     public void winGame() {
         MainMenu.windowLocation = Game.gameWindow().getLocation();
-
-
         System.out.println("Game Won!");
         Game.showGameWindow(false);
         setGamestate(Gamestate.MENU);
@@ -33,18 +34,24 @@ public class GameController {
         Game.mainMenu().showMenu();
     }
 
+    /**
+     * The Standard Method to Lose the Game
+     */
+
     public void loseGame() {
         Game.gameClock().killGameThread();
         Game.gameController().setGamestate(Gamestate.STARTING);
         Game.player().deletePlayer();
         Game.audioController().stopSound("background.wav");
         Game.audioController().playSound("death.wav");
-
         Game.loadLevel("/maps/map1");
         System.out.println("Game Lost!");
 
     }
 
+    /**
+     * The different gamestates as an enum
+     */
 
     public enum Gamestate {
         //Menü Gamestate
