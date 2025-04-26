@@ -1,6 +1,7 @@
 package de.school.game.clock;
 
 import de.school.game.Game;
+import de.school.game.GameController;
 import de.school.game.util.FileUtil;
 
 import java.io.BufferedWriter;
@@ -10,35 +11,55 @@ import java.io.IOException;
 
 public class ScoreManager {
 
-    //Die Zeit die der Spieler für das aktuelle Level benötigt hat in Nanosekunden
-    public float currentLevelTime;
-    public long levelStartTime;
+    private double timeInCurrentLevel;
+    private long lastUpdate;
 
     //Dies soll nur gecallt werden, wenn der Spieler ein Level startet
     public ScoreManager() {
-        currentLevelTime = 0;
-        levelStartTime = System.nanoTime();
-    }
-    //Die Zeit die der Spieler für das aktuelle Level benötigt wird inkrementiert
-    public void updateLevelTime(long nanoseconds) {
-        currentLevelTime = nanoseconds;
+        lastUpdate = System.currentTimeMillis();
+        timeInCurrentLevel = 0;
     }
 
-    //Speichert die jetzige Zeit in einer Datei ab. Wird aufgerufen wenn der Spieler ein Level verliert
-    public void saveInFile(String level) {
-        BufferedWriter writer = null;
-        try {
-            File file = new File(ClassLoader.getSystemResource("scores/"+level+".score").getPath());
-            if (!file.exists()) {
-                file.createNewFile();
+    //Die Zeit die der Spieler für das aktuelle Level benötigt wird inkrementiert
+    public void addTimeToCounter() {
+        //Damit nicht die Zeit aktualisiert wird, wenn das Spiel aktualisiert ist
+        if (Game.gameController().getGamestate().equals(GameController.Gamestate.PAUSED)) {
+            lastUpdate = System.currentTimeMillis();
+        }
+        timeInCurrentLevel += System.currentTimeMillis() - lastUpdate;
+
+        lastUpdate = System.currentTimeMillis();
+    }
+
+    public double getTimeInCurrentLevelMs() {
+        return timeInCurrentLevel;
+    }
+
+    public double getTimeInCurrentLevelSec() {
+        return getTimeInCurrentLevelMs() / 1000;
+    }
+
+    public void setLastUpdate() {
+        lastUpdate = System.currentTimeMillis();
+    }
+
+    public void saveCurrentScore(String level) {
+        File scoresDir = FileUtil.getFileByResource("scores/");
+        File saveFile = new File(scoresDir, level + ".save");
+        if (!saveFile.exists()) {
+            try {
+                boolean s = saveFile.createNewFile();
+                System.out.println("creating new file: "+s);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-            writer = new BufferedWriter(new FileWriter(file, true));
-            writer.write( (currentLevelTime - levelStartTime)+"\n");
-            writer.close();
+        }
+        System.out.println("ex2");
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(saveFile))) {
+            bufferedWriter.write(getTimeInCurrentLevelSec() + "");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
     }
-
 }

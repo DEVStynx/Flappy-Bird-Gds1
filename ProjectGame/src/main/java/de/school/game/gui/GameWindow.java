@@ -83,6 +83,21 @@ public class GameWindow extends JPanel {
             graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
             graphics2D.drawString("Press Space to start the game", screenWidth / 2 -100, ScreenHeight / 2 -100);
         }
+        //Hier wird der Text angezeigt, der dem Spieler seine Zeit zeigt.
+        if (Game.gameController().getGamestate().equals(GameController.Gamestate.WON)) {
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.setFont(new Font("Arial", Font.PLAIN, 35));
+            graphics2D.drawString("Won, Time: "+(Game.gameClock().scoreManager.getTimeInCurrentLevelSec()), screenWidth / 2 -100, ScreenHeight / 2 -100);
+            graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
+            graphics2D.drawString("Press Space to Go Back to the Menu!",screenWidth / 2 -100, ScreenHeight / 2 -75);
+        }
+
+        //Die Zeit oben Anzeigen
+        graphics2D.setColor(Color.WHITE);
+        graphics2D.setFont(new Font("Arial",Font.PLAIN,20));
+        graphics2D.drawString(Game.gameClock().scoreManager.getTimeInCurrentLevelSec() + "", 20, 20);
+        System.out.println(Game.gameClock().scoreManager.getTimeInCurrentLevelSec());
+
 
         //Don't put anything here
         //After this, nothing will be rendered

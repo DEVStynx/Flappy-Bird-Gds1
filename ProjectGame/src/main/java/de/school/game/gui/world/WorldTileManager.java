@@ -1,6 +1,7 @@
 package de.school.game.gui.world;
 
 import de.school.game.Game;
+import de.school.game.gui.Animation;
 import de.school.game.util.FileUtil;
 import de.school.game.util.rendering.RenderUtil;
 
@@ -37,14 +38,20 @@ public class WorldTileManager {
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         loadedDetails = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         collisionTileManager = new CollisionTileManager();
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/air.png"))));
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png"))));
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png"))));
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png"))));
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/air.png")))); //0
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png")))); //1
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png")))); //2
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png")))); //3
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png")))); //1
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png")))); //2
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png")))); //3
+
 
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
-
+        //2 For the Goal Star
+        AnimatedTileTexture animatedTileTexture = new AnimatedTileTexture("textures/map/details/goal_star/",30);
+        addDetailToLibrary(animatedTileTexture);
 
     }
 
@@ -121,7 +128,7 @@ public class WorldTileManager {
         int y = 0;
 
         while (col < Game.gameWindow().maxScreenCol && row < Game.gameWindow().maxScreenRows) {
-            graphics2D.drawImage(tiles.get(map[col][row]).texture, x, y, Game.gameWindow().tileSize, Game.gameWindow().tileSize, null);
+            graphics2D.drawImage(tiles.get(map[col][row]).getTexture(), x, y, Game.gameWindow().tileSize, Game.gameWindow().tileSize, null);
             col++;
             x += Game.gameWindow().tileSize;
             if (col == Game.gameWindow().maxScreenCol) {

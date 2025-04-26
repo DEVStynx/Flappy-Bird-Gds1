@@ -13,11 +13,19 @@ public class FileUtil {
      * @return
      */
     public static File getFileByResource(String resource) {
-        URL url = PlayerEntity.class.getClassLoader().getResource(resource);
-        File file = new File(url.getPath());
-        if (url == null|| file == null) {
-            throw new FileOpeningException("The Given resource isn't available");
+        // Entferne führenden Slash
+        resource = resource.startsWith("/") ? resource.substring(1) : resource;
+
+        URL url = FileUtil.class.getClassLoader().getResource(resource);
+        if (url == null) {
+            throw new FileOpeningException("Resource nicht gefunden: " + resource);
         }
+
+        File file = new File(url.getPath());
+        if (!file.exists()) {
+            throw new FileOpeningException("Datei existiert nicht: " + file.getPath());
+        }
+
         return file;
     }
 }

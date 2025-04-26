@@ -62,7 +62,7 @@ public class MainMenu extends Menu {
                     System.out.println("Game started");
                     //laden des Levels
                     deleteMenu();
-                    Game.loadLevel("/maps/map0");
+                    Game.loadLevel("/maps/level1");
                 }
             });
             startButton.setOpaque(true);

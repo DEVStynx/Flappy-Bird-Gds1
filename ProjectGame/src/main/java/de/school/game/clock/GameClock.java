@@ -80,16 +80,21 @@ public class GameClock implements Runnable{
      * The Main update Method if the Game is updating
      */
     public void update() {
+        if (scoreManager != null) {
+            scoreManager.addTimeToCounter();
+        }
         //Wenn der Spieler in einem Menü ist kein Game-Update ausführen
         //If the player is in a menu, don't update the Game
         if (Game.gameController().getGamestate() != GameController.Gamestate.RUNNING)
             return;
+        //Aktualisieren des Timers für den Score
+
 
         //Game-Update wird ausgeführt
         //Update the game screen
         Game.gameWindow().repaint();
 
-
+        //Spieler Movement/Bewegung wird aktualisiert
         if (Game.player() != null) {
             Game.player().handleMovement();
             if (Game.gameCollisionManager() != null)

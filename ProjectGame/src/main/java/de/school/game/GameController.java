@@ -23,15 +23,12 @@ public class GameController {
      * The Standard Method to Win the Game
      */
     public void winGame() {
-        MainMenu.windowLocation = Game.gameWindow().getLocation();
+        Game.gameClock().scoreManager.saveCurrentScore("test");
         System.out.println("Game Won!");
-        Game.showGameWindow(false);
-        setGamestate(Gamestate.MENU);
+        setGamestate(Gamestate.WON);
         Game.audioController().stopSound("background.wav");
         Game.audioController().playSound("win.wav");
-        Game.player().deletePlayer();
-        Game.gameClock().killGameThread();
-        Game.mainMenu().showMenu();
+
     }
 
     /**
@@ -61,6 +58,8 @@ public class GameController {
         //Gamestate für das Spiel
         RUNNING,
         //Gamestate für das Pausieren des Spiels
-        PAUSED
+        PAUSED,
+        //Gamestate für das Gewinnen des Spiels
+        WON
     }
 }
