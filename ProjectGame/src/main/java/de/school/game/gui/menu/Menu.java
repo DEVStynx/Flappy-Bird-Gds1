@@ -11,6 +11,7 @@ import java.awt.*;
 public abstract class Menu extends JFrame {
     public static Point windowLocation;
     public String name;
+    private boolean initialized = false; // Flag zur Überprüfung der Initialisierung
 
     public Menu(String name) {
         this.name = name;
@@ -28,10 +29,29 @@ public abstract class Menu extends JFrame {
      */
     public void showMenu() {
         Game.showGameWindow(false);
-        initWidgets();
+        setLocation(windowLocation);
+        // Nur initialisieren, wenn es noch nicht gemacht wurde
+        if (!initialized) {
+            initWidgets();
+            initialized = true;
+        }
+
         this.setVisible(true);
     }
+
     public void deleteMenu() {
         setVisible(false);
+    }
+
+    /**
+     * Methode zum manuellen Neuinitialisieren der Widgets bei Bedarf
+     */
+    public void reinitWidgets() {
+        initialized = false;
+        getContentPane().removeAll();
+        initWidgets();
+        initialized = true;
+        revalidate();
+        repaint();
     }
 }

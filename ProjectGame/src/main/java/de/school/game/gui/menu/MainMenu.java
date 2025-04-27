@@ -14,7 +14,6 @@ import java.io.IOException;
  * The Startmenu class
  */
 public class MainMenu extends Menu {
-    BufferedImage background;
     public MainMenu() {
         super("Start-Menu");
     }
@@ -62,7 +61,8 @@ public class MainMenu extends Menu {
                     System.out.println("Game started");
                     //laden des Levels
                     deleteMenu();
-                    Game.loadLevel("/maps/level1");
+                    Game.levelSelectionMenu().showMenu();
+                    //Game.loadLevel("/maps/level1");
                 }
             });
             startButton.setOpaque(true);
@@ -81,6 +81,6 @@ public class MainMenu extends Menu {
     @Override
     public void showMenu() {
         super.showMenu();
-        setLocation(windowLocation);
+        setLocation(Menu.windowLocation);
     }
 }

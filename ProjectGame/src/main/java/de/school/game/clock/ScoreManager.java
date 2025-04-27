@@ -41,6 +41,8 @@ public class ScoreManager {
 
     public void setLastUpdate() {
         lastUpdate = System.currentTimeMillis();
+
+
     }
 
     public void saveCurrentScore(String level) {

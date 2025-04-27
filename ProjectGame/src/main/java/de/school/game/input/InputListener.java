@@ -4,6 +4,7 @@ import de.school.game.Game;
 import de.school.game.GameController;
 import de.school.game.entity.player.PlayerDirection;
 import de.school.game.gui.menu.MainMenu;
+import de.school.game.gui.menu.Menu;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -37,12 +38,12 @@ public class InputListener extends KeyAdapter {
                 Game.gameController().setGamestate(GameController.Gamestate.MENU);
 
                 //Anzeigen des Startmenüs
-                MainMenu.windowLocation = Game.gameWindow().getLocation();
+                Menu.windowLocation = Game.gameWindow().getLocation();
                 Game.showGameWindow(false);
                 Game.player().deletePlayer();
                 Game.gameClock().killGameThread();
                 Game.mainMenu().showMenu();
-                Game.mainMenu().setLocation(MainMenu.windowLocation);
+                Game.mainMenu().setLocation(Menu.windowLocation);
             }
             //Keyboardinput to let the player jump
             Game.player().jump();

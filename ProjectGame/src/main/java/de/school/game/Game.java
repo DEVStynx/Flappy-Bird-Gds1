@@ -5,7 +5,9 @@ import de.school.game.clock.GameClock;
 import de.school.game.collision.GameCollisionManager;
 import de.school.game.entity.player.PlayerEntity;
 import de.school.game.gui.GameWindow;
+import de.school.game.gui.menu.LevelSelectionMenu;
 import de.school.game.gui.menu.MainMenu;
+import de.school.game.gui.menu.Menu;
 import de.school.game.gui.world.WorldTileManager;
 import de.school.game.input.InputListener;
 import de.school.game.util.FileUtil;
@@ -27,6 +29,7 @@ public class Game extends JFrame {
     private static GameCollisionManager gameCollisionManager;
     private static GameController gameController;
     private static MainMenu mainMenu;
+    private static LevelSelectionMenu levelSelectionMenu;
 
     private static Game instance;
 
@@ -41,6 +44,7 @@ public class Game extends JFrame {
     public Game(int FPS) {
         instance = this;
         mainMenu = new MainMenu();
+        levelSelectionMenu = new LevelSelectionMenu();
         this.setVisible(false);
 
         //                                  Setzt den Modus auf Debugging/Normal Debugging = true
@@ -81,7 +85,7 @@ public class Game extends JFrame {
         // GameController auf Menü setzen und Menü anzeigen
         gameController.setGamestate(GameController.Gamestate.MENU);
         mainMenu.showMenu(); // Menü wird jetzt angezeigt
-        mainMenu.setLocation(MainMenu.windowLocation);
+        mainMenu.setLocation(Menu.windowLocation);
         audioController = new AudioController();
         try {
             audioController.loadByDir();
@@ -97,7 +101,8 @@ public class Game extends JFrame {
      * @param level The levelname -> points to a directory in the resources
      */
     public static void loadLevel(String level) {
-        MainMenu.windowLocation = mainMenu().getLocation();
+        Menu.windowLocation = levelSelectionMenu().getLocation();
+        levelSelectionMenu.deleteMenu();
         instance.setVisible(true);
         instance.setLocation(MainMenu.windowLocation);
         audioController().playSound("background.wav",true);
@@ -150,7 +155,12 @@ public class Game extends JFrame {
     public static MainMenu mainMenu() {
         return mainMenu;
     }
-    public static AudioController audioController() {return audioController;}
+    public static LevelSelectionMenu levelSelectionMenu() {
+        return levelSelectionMenu;
+    }
+    public static AudioController audioController() {
+        return audioController;
+    }
 
 
 }
