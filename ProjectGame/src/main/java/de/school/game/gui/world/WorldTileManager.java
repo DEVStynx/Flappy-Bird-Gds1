@@ -38,17 +38,23 @@ public class WorldTileManager {
         loadedMap = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         loadedDetails = new int[Game.gameWindow().maxScreenCol][Game.gameWindow().maxScreenRows];
         collisionTileManager = new CollisionTileManager();
+        //Tile Registry
+
+        //Grass
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/air.png")))); //0
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png")))); //1
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png")))); //2
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png")))); //3
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up.png")))); //1
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_left.png")))); //2
-        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/grass_up_right.png")))); //3
+
+        //Stone
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_up.png")))); //4
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_up_left.png")))); //5
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_up_right.png")))); //6
 
 
-        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png"))));
-        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/tree01.png"))));
+        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png")))); //0
+        addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/spike_trap.png")))); //1
+        //Aimated Tiles/Details
         //2 For the Goal Star
         AnimatedTileTexture animatedTileTexture = new AnimatedTileTexture("textures/map/details/goal_star/",30);
         addDetailToLibrary(animatedTileTexture);
