@@ -2,6 +2,9 @@ package de.school.game.gui.world;
 
 import java.awt.image.BufferedImage;
 
+/**
+ * A Wrapper Class to get the texture
+ */
 public class TileTexture {
     public BufferedImage texture;
 
