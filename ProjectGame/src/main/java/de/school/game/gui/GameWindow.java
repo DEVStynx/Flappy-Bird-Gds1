@@ -96,7 +96,7 @@ public class GameWindow extends JPanel {
         graphics2D.setColor(Color.WHITE);
         graphics2D.setFont(new Font("Arial",Font.PLAIN,20));
         graphics2D.drawString(Game.gameClock().scoreManager.getTimeInCurrentLevelSec() + "", 20, 20);
-        System.out.println(Game.gameClock().scoreManager.getTimeInCurrentLevelSec());
+
 
 
         //Don't put anything here

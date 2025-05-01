@@ -32,6 +32,7 @@ public class Game extends JFrame {
     private static LevelSelectionMenu levelSelectionMenu;
 
     private static Game instance;
+    private static String currentLevel = "";
 
     private static AudioController audioController;
     public static int FPS;
@@ -79,13 +80,13 @@ public class Game extends JFrame {
         icon = RenderUtil.loadTexture(FileUtil.getFileByResource("textures/player/player_anim_mid.png"));
         this.setIconImage(icon);
         //Wenn das Menü auftaucht soll das SpielFrame nicht sichtbar sein
-        MainMenu.windowLocation = getLocation();
+        Menu.setWindowLocation(getLocation());
         setVisible(false);
 
         // GameController auf Menü setzen und Menü anzeigen
         gameController.setGamestate(GameController.Gamestate.MENU);
         mainMenu.showMenu(); // Menü wird jetzt angezeigt
-        mainMenu.setLocation(Menu.windowLocation);
+        mainMenu.setLocation(Menu.getWindowLocation());
         audioController = new AudioController();
         try {
             audioController.loadByDir();
@@ -101,10 +102,12 @@ public class Game extends JFrame {
      * @param level The levelname -> points to a directory in the resources
      */
     public static void loadLevel(String level) {
-        Menu.windowLocation = levelSelectionMenu().getLocation();
+
         levelSelectionMenu.deleteMenu();
         instance.setVisible(true);
-        instance.setLocation(MainMenu.windowLocation);
+
+        System.out.println("call getWindowloc: "+(Menu.getWindowLocation().x)+ "y: "+(Menu.getWindowLocation().y));
+        instance.setLocation(Menu.getWindowLocation());
         audioController().playSound("background.wav",true);
         // Stelle sicher, dass das Level nur geladen wird, wenn das Menü nicht mehr aktiv ist
         Game.gameWindow.repaint();
@@ -112,6 +115,7 @@ public class Game extends JFrame {
 
         player = new PlayerEntity(gameWindow.maxScreenCol / 2 * gameWindow.tileSize, gameWindow.maxScreenRows / 2 * gameWindow.tileSize, 1);
         worldTileManager = new WorldTileManager();
+        System.out.println("tried to call map: "+level);
         worldTileManager.loadMapByDir(level);
         gameCollisionManager = new GameCollisionManager();
         if (gameClock != null)
@@ -119,7 +123,7 @@ public class Game extends JFrame {
 
         gameClock = new GameClock(Game.FPS); // Starte den GameClock, um das Level zu aktualisieren
         gameClock.startGameThread();
-
+        currentLevel = level.replace("/maps/","");
     }
 
     /**
@@ -161,6 +165,11 @@ public class Game extends JFrame {
     public static AudioController audioController() {
         return audioController;
     }
-
+    public static String getCurrentLevel() {
+        if (currentLevel.isEmpty()) {
+            throw new RuntimeException("There is currently no level loaded!");
+        }
+        return currentLevel;
+    }
 
 }

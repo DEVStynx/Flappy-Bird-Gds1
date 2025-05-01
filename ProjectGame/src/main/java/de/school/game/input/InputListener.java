@@ -38,12 +38,11 @@ public class InputListener extends KeyAdapter {
                 Game.gameController().setGamestate(GameController.Gamestate.MENU);
 
                 //Anzeigen des Startmenüs
-                Menu.windowLocation = Game.gameWindow().getLocation();
                 Game.showGameWindow(false);
                 Game.player().deletePlayer();
                 Game.gameClock().killGameThread();
                 Game.mainMenu().showMenu();
-                Game.mainMenu().setLocation(Menu.windowLocation);
+
             }
             //Keyboardinput to let the player jump
             Game.player().jump();

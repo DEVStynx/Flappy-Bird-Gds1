@@ -9,7 +9,7 @@ import java.awt.*;
  * the abstract Menu Class to easily create and switch between mennus/Windows
  */
 public abstract class Menu extends JFrame {
-    public static Point windowLocation;
+    private static Point windowLocation;
     public String name;
     private boolean initialized = false; // Flag zur Überprüfung der Initialisierung
 
@@ -29,7 +29,7 @@ public abstract class Menu extends JFrame {
      */
     public void showMenu() {
         Game.showGameWindow(false);
-        setLocation(windowLocation);
+        setLocation(getWindowLocation());
         // Nur initialisieren, wenn es noch nicht gemacht wurde
         if (!initialized) {
             initWidgets();
@@ -41,6 +41,7 @@ public abstract class Menu extends JFrame {
 
     public void deleteMenu() {
         setVisible(false);
+        windowLocation = getLocation();
     }
 
     /**
@@ -53,5 +54,11 @@ public abstract class Menu extends JFrame {
         initialized = true;
         revalidate();
         repaint();
+    }
+    public static void setWindowLocation(Point location) {
+        windowLocation = location;
+    }
+    public static Point getWindowLocation() {
+        return windowLocation;
     }
 }

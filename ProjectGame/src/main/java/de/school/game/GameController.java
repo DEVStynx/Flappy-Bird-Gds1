@@ -23,7 +23,7 @@ public class GameController {
      * The Standard Method to Win the Game
      */
     public void winGame() {
-        Game.gameClock().scoreManager.saveCurrentScore("test");
+        Game.gameClock().scoreManager.saveCurrentScore(Game.getCurrentLevel());
         System.out.println("Game Won!");
         setGamestate(Gamestate.WON);
         Game.audioController().stopSound("background.wav");
@@ -36,12 +36,13 @@ public class GameController {
      */
 
     public void loseGame() {
+        System.out.println("Current Level: "+Game.getCurrentLevel());
         Game.gameClock().killGameThread();
         Game.gameController().setGamestate(Gamestate.STARTING);
         Game.player().deletePlayer();
         Game.audioController().stopSound("background.wav");
         Game.audioController().playSound("death.wav");
-        Game.loadLevel("/maps/map1");
+        Game.loadLevel("/maps/"+Game.getCurrentLevel());
         System.out.println("Game Lost!");
 
     }

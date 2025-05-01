@@ -51,6 +51,9 @@ public class WorldTileManager {
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_up_left.png")))); //5
         addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_up_right.png")))); //6
 
+        //Stone Walls
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_in_left.png")))); //7
+        addTileToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/tiles/stone_in_right.png")))); //8
 
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/air.png")))); //0
         addDetailToLibrary(new TileTexture(RenderUtil.loadTexture(FileUtil.getFileByResource("textures/map/details/spike_trap.png")))); //1

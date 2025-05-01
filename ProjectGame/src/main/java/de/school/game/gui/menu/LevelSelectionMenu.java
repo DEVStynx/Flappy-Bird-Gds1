@@ -133,6 +133,6 @@ public class LevelSelectionMenu extends Menu{
     @Override
     public void showMenu() {
         super.showMenu();
-        setLocation(Menu.windowLocation);
+        setLocation(Menu.getWindowLocation());
     }
 }
