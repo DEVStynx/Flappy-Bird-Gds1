@@ -94,6 +94,12 @@ public class GameWindow extends JPanel {
             //Bestzeit anzeigen
             graphics2D.drawString("Bestzeit für das Level: "+ Game.gameClock().scoreManager.readBestScore(Game.getCurrentLevel()) +"s",screenWidth / 2 -100, ScreenHeight / 2 - 50);
         }
+        //Anzeigen, dass das Spiel pausiert ist
+        if (Game.gameController().getGamestate().equals(GameController.Gamestate.PAUSED)) {
+            graphics2D.setColor(Color.WHITE);
+            graphics2D.setFont(new Font("Arial", Font.PLAIN, 30));
+            graphics2D.drawString("Paused, Press Escape to resume!", screenWidth / 2 - 150, ScreenHeight / 2 );
+        }
 
         //Die Zeit oben Anzeigen
         graphics2D.setColor(Color.WHITE);

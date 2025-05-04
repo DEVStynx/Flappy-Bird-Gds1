@@ -23,6 +23,7 @@ public class InputListener extends KeyAdapter {
         //Keyboardinput to pause the game with escape
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             Game.gameController().setGamestate(Game.gameController().getGamestate() == GameController.Gamestate.RUNNING ? GameController.Gamestate.PAUSED  : GameController.Gamestate.RUNNING);
+            Game.gameWindow().repaint();
             if (Game.gameController().getGamestate().equals(GameController.Gamestate.RUNNING)) {
                 Game.gameClock().scoreManager.setLastUpdate();
             }

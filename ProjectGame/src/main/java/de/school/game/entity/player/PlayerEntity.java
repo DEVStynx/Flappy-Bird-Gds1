@@ -51,7 +51,7 @@ public class PlayerEntity extends RenderableObject {
         this.playerSpeedX = playerSpeedX;
         this.gravity = 0.01f;
         this.gravitySpeed = 1f;
-        this.jumpPower =12;
+        this.jumpPower = 7;
         this.maxgravity = gravitySpeed + 0.25f;
 
     }
@@ -98,10 +98,8 @@ public class PlayerEntity extends RenderableObject {
         if (this.gravitySpeed > maxgravity) {
             this.gravitySpeed = maxgravity;
         }
-        if (y + gravitySpeed >= Game.gameWindow().getHeight() - Game.gameWindow().tileSize + 3) {
-            //Touched Ground
-            return;
-        }
+
+
         //Checking if the Player can move/would collide with an object underneath
         if (Game.gameCollisionManager().canPlayerMove(0, (int) gravitySpeed)) {
             y += gravitySpeed;
@@ -115,6 +113,7 @@ public class PlayerEntity extends RenderableObject {
      * <p>And Checks if a jump would be possible and prevent the player to phase through objects</p>
      */
     public void jump() {
+
         int totalJumpHeight = jumpPower * 10;
 
         for (int i = 0; i < totalJumpHeight; i++) {
@@ -129,6 +128,7 @@ public class PlayerEntity extends RenderableObject {
 
         // Reset gravity, damit er wieder ordentlich fällt
         gravitySpeed = 1f;
+
     }
 
     /**
@@ -139,9 +139,7 @@ public class PlayerEntity extends RenderableObject {
     public BufferedImage getTexture() {
         if (direction == PlayerDirection.LEFT) {
             return playerLeftAnimation.getCurrentTexture();
-
         }
         return playerAnimation.getCurrentTexture();
-
     }
 }

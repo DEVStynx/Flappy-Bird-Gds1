@@ -28,7 +28,7 @@ public class GameController {
         setGamestate(Gamestate.WON);
         Game.audioController().stopSound("background.wav");
         Game.audioController().playSound("win.wav");
-
+        Game.gameWindow().repaint();
     }
 
     /**
@@ -44,7 +44,7 @@ public class GameController {
         Game.audioController().playSound("death.wav");
         Game.loadLevel("/maps/"+Game.getCurrentLevel());
         System.out.println("Game Lost!");
-
+        Game.gameWindow().repaint();
     }
 
     /**

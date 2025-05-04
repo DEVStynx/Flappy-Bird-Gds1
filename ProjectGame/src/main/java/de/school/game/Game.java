@@ -49,8 +49,7 @@ public class Game extends JFrame {
         this.setVisible(false);
 
         //                                  Setzt den Modus auf Debugging/Normal Debugging = true
-        gameController = new GameController(false
-        ); // Stelle sicher, dass der GameController initialisiert ist
+        gameController = new GameController(false); // Stelle sicher, dass der GameController initialisiert ist
         Game.FPS = FPS;
         startGame(Game.FPS);
 
