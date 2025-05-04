@@ -33,12 +33,13 @@ public class LevelSelectionMenu extends Menu{
 
         try {
             //Background Image
+            loadAllLevels();
             ImageIcon background = new ImageIcon(ImageIO.read(ClassLoader.getSystemResourceAsStream("textures/menu/main-menu/background.png")).getScaledInstance(Game.gameWindow().screenWidth,Game.gameWindow().ScreenHeight,Image.SCALE_SMOOTH));
             JLabel backgroundImage = new JLabel(background);
             backgroundImage.setBounds(0,0,getWidth(),getHeight());
             add(backgroundImage);
 
-            loadAllLevels();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
